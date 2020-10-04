@@ -6,8 +6,6 @@ import {
 	escapeTag,
 } from "./stringmanip.ts";
 
-const encoder = new TextEncoder();
-
 export interface RatlogData {
 	message: string;
 	tags?: string[];
