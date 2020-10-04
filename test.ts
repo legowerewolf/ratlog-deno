@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.73.0/testing/asserts.ts";
+import { assertEquals } from "./deps.ts";
 import Ratlog, { RatlogData } from "./ratlog.ts";
 
 interface TestCase {
