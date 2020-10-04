@@ -34,5 +34,9 @@ let testCases: TestcaseFile = await fetch(
 	});
 
 testCases.generic.map(({ log, data }) =>
-	Deno.test(JSON.stringify(data), () => assertEquals(log, Ratlog.format(data)))
+	Deno.test(JSON.stringify(data), () => assertEquals(Ratlog.format(data), log))
+);
+
+testCases.generic.map(({ log, data }) =>
+	Deno.test(`"${log.trim()}"`, () => assertEquals(Ratlog.parse(log), data))
 );
