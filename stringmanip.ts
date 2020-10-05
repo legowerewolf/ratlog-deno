@@ -30,3 +30,5 @@ export const unescapeTag = (tag: string) =>
 	apply(tag, [unescape("]"), unescape("|")]);
 export const unescapeMessage = (message: string) =>
 	apply(message, [unescape("["), unescape("|")]);
+export const unescapeField = (fieldpart: string) =>
+	apply(fieldpart, [unescape(":"), unescape("|")]);

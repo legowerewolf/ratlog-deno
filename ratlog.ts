@@ -5,6 +5,7 @@ import {
 	escapeMessage,
 	escapeTag,
 	unescape,
+	unescapeField,
 	unescapeMessage,
 	unescapeTag,
 } from "./stringmanip.ts";
@@ -43,7 +44,7 @@ export default class Ratlog {
 	static parse(logline: string): RatlogData {
 		let data: Partial<RatlogData> = {};
 
-		logline = logline.trimEnd();
+		logline = logline.replace(/\n$/, ""); // Trim off the newline at the end
 
 		logline = apply(logline, [unescape("\n")]);
 
@@ -54,9 +55,24 @@ export default class Ratlog {
 		}
 
 		let messageSection = logline.match(/.*?(?= \|)/);
-		data.message = messageSection ? messageSection[0] : "";
-		logline = logline.substring(data.message.length);
-		data.message = unescapeMessage(data.message);
+		let messageString = messageSection ? messageSection[0] : logline;
+		logline = logline.substring(messageString.length);
+		data.message = unescapeMessage(messageString);
+
+		if (logline.length > 0)
+			data.fields = logline
+				.split(/ (?<!\\)\| /g)
+				.slice(1)
+				.reduce((fields: RatlogData["fields"], elem) => {
+					let parts = elem.split(/(?<!\\): /);
+
+					return {
+						...fields,
+						[unescapeField(parts[0])]: parts[1]
+							? unescapeField(parts[1])
+							: null,
+					};
+				}, {});
 
 		return data as RatlogData;
 	}
