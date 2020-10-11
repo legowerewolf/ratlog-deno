@@ -34,9 +34,57 @@ let testCases: TestcaseFile = await fetch(
 	});
 
 testCases.generic.map(({ log, data }) =>
-	Deno.test(JSON.stringify(data), () => assertEquals(Ratlog.format(data), log))
+	Deno.test(`core format ${JSON.stringify(data)}`, () =>
+		assertEquals(Ratlog.format(data), log)
+	)
 );
 
 testCases.generic.map(({ log, data }) =>
-	Deno.test(`"${log.trim()}"`, () => assertEquals(Ratlog.parse(log), data))
+	Deno.test(`core parse "${log.trim()}"`, () =>
+		assertEquals(Ratlog.parse(log), data)
+	)
+);
+
+testCases.generic.map(({ log, data }) =>
+	Deno.test(`classic-api format default ${JSON.stringify(data)}`, async () => {
+		const ratlog = await (await import("./classic-api.ts")).default;
+
+		const write = (line: string) => assertEquals(line, log);
+
+		let logger = ratlog(write);
+
+		logger(data.message, data.fields, ...(data.tags ?? []));
+	})
+);
+
+testCases.generic.map(({ log, data }) =>
+	Deno.test(
+		`classic-api format default bound tag ${JSON.stringify(data)}`,
+		async () => {
+			const ratlog = await (await import("./classic-api.ts")).default;
+
+			const write = (line: string) => assertEquals(line, log);
+
+			let logger = ratlog(write, ...(data.tags ?? []));
+
+			logger(data.message, data.fields);
+		}
+	)
+);
+
+testCases.generic.map(({ log, data }) =>
+	Deno.test(
+		`classic-api format secondary bound tag ${JSON.stringify(data)}`,
+		async () => {
+			const ratlog = await (await import("./classic-api.ts")).default;
+
+			const write = (line: string) => assertEquals(line, log);
+
+			let logger1 = ratlog(write);
+
+			let logger2 = logger1.tag(...(data.tags ?? []));
+
+			logger2(data.message, data.fields);
+		}
+	)
 );

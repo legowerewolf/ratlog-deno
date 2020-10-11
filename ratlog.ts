@@ -10,27 +10,29 @@ import {
 	unescapeTag,
 } from "./stringmanip.ts";
 
+export type Stringable = string | { toString: () => string };
+
 export interface RatlogData {
-	message: string;
-	tags?: string[];
-	fields?: {
-		[key: string]: string | null;
-	};
+	message: Stringable;
+	tags?: Stringable[];
+	fields?: Record<string, Stringable | null>;
 }
 
 export default class Ratlog {
 	static format(data: RatlogData): string {
 		let tagString =
 			data.tags?.length ?? 0 > 0
-				? `[${(data.tags ?? []).map(escapeTag).join("|")}] `
+				? `[${(data.tags ?? [])
+						.map((tag) => escapeTag(tag.toString()))
+						.join("|")}] `
 				: ``;
 
-		let messageString = escapeMessage(data.message ?? "");
+		let messageString = escapeMessage(data.message.toString() ?? "");
 
 		let fieldString = Object.entries(data.fields ?? {})
 			.map((entry) =>
 				entry.map((subentry) =>
-					subentry != null ? escapeField(subentry) : subentry
+					subentry != null ? escapeField(subentry.toString()) : subentry
 				)
 			)
 			.map((entry) => `${entry[0]}${entry[1] != null ? `: ${entry[1]}` : ``}`)
