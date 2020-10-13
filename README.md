@@ -12,8 +12,6 @@
 [Deno](https://deno.land/) implementation of
 [Ratlog log formatter](https://github.com/ratlog/ratlog-spec).
 
-API is unstable. `import` from specific commits until stated otherwise.
-
 ## How to help
 
 - Check out
