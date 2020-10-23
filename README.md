@@ -1,4 +1,4 @@
-# ratlog-deno
+# 🐀 Ratlog library for Deno - Application Logging for Rats, Humans, and Machines
 
 [![Github release version (semver)](https://img.shields.io/github/v/release/legowerewolf/ratlog-deno?sort=semver)](https://github.com/legowerewolf/ratlog-deno/releases/latest)
 ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/legowerewolf/ratlog-deno/latest?sort=semver)
