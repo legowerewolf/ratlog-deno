@@ -12,6 +12,69 @@
 [Deno](https://deno.land/) implementation of
 [Ratlog log formatter](https://github.com/ratlog/ratlog-spec).
 
+## Getting started
+
+This package exposes two APIs. The more fully-featured of the two tries to match
+the [Ratlog.js](https://github.com/ratlog/ratlog.js) API, and is henceforth
+called the Classic API.
+
+```ts
+// Import the Classic API from deno.land/x/
+import ratlog from "https://deno.land/x/ratlog@v0.3.0/classic-api.ts";
+
+// Set up logging through the console output
+const log = ratlog(console.log);
+
+log("hello, world");
+//> hello, world
+
+// Add fields
+log("counting", { count: 1 });
+//> counting | count: 1
+
+// Add fields and a tag
+log("counting", { count: -1 }, "negative");
+//> [negative] counting | count: -1
+
+// Create another logger bound to a tag
+const warn = log.tag("warning");
+
+warn("disk space low");
+//> [warning] disk space low
+
+// Combine and nest tags any way you like
+const critical = warn.tag("critical");
+
+critical("shutting down all servers");
+//> [warning|critical] shutting down all servers
+```
+
+The core of the implementation is exposed in `./ratlog.ts`, and is called the
+Core API. It's less fully featured, but provides a parsing implementation.
+
+```ts
+// Import the Core API from deno.land/x/
+import Ratlog from "https://deno.land/x/ratlog@v0.3.0/ratlog.ts";
+
+Ratlog.log({ message: "hello, world" });
+// returns "hello, world"
+
+Ratlog.log({ message: "counting", fields: { count: 1 } });
+// returns "counting | count: 1"
+
+Ratlog.log({ message: "counting", tags: ["negative"], fields: { count: -1 } });
+// returns "[negative] counting | count: -1"
+
+Ratlog.parse("[negative] counting | count: -1");
+// returns { message: "counting", tags: ["negative"], fields: { count: -1 } }
+
+Ratlog.parse("counting | count: 1");
+// returns { message: "counting", fields: { count: 1 } }
+
+Ratlog.parse("hello, world");
+// returns { message: "hello, world" }
+```
+
 ## How to help
 
 - Check out
