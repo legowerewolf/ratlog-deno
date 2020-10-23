@@ -1,5 +1,4 @@
 import {
-	apply,
 	escape,
 	escapeField,
 	escapeMessage,
@@ -38,9 +37,7 @@ export default class Ratlog {
 			.map((entry) => `${entry[0]}${entry[1] != null ? `: ${entry[1]}` : ``}`)
 			.reduce((prev, cur) => `${prev} | ${cur}`, "");
 
-		return (
-			apply(tagString + messageString + fieldString, [escape("\n")]) + "\n"
-		);
+		return escape("\n")(tagString + messageString + fieldString) + "\n";
 	}
 
 	static parse(logline: string): RatlogData {
@@ -48,7 +45,7 @@ export default class Ratlog {
 
 		logline = logline.replace(/\n$/, ""); // Trim off the newline at the end
 
-		logline = apply(logline, [unescape("\n")]);
+		logline = unescape("\n")(logline);
 
 		let tagSection = logline.match(/^\[(.*(?<!\\))\] ?/);
 		if (tagSection) {
