@@ -1,6 +1,14 @@
+/**
+ * @param str a string to be transformed
+ * @param mut an array of string transformation functions to be applied left-to-right to `str`
+ */
 export const apply = (str: string, mut: ((str: string) => string)[]) =>
 	mut.reduce((prev, func) => func(prev), str);
 
+/**
+ *
+ * @param symbol a symbol (character) to generate an escape function for
+ */
 export const escape = (symbol: string) => (input: string) => {
 	switch (symbol) {
 		case "\n":
@@ -10,6 +18,9 @@ export const escape = (symbol: string) => (input: string) => {
 	}
 };
 
+/**
+ * @param symbol a symbol (character) to generate an unescape function for
+ */
 export const unescape = (symbol: string) => (input: string) => {
 	switch (symbol) {
 		case "\n":
