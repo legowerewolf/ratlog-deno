@@ -9,8 +9,16 @@ import {
 	unescapeTag,
 } from "./stringmanip.ts";
 
+/**
+ * An object that either is a string, or reveals a toString() function.
+ *
+ * Utility type, used to make the Ratlog API more flexible.
+ */
 export type Stringable = string | { toString: () => string };
 
+/**
+ * The base Ratlog data type. All logs are serialized from and parsed to objects of this type.
+ */
 export interface RatlogData {
 	message: Stringable;
 	tags?: Stringable[];
@@ -18,6 +26,10 @@ export interface RatlogData {
 }
 
 export default class Ratlog {
+	/**
+	 * Take a 'line' of Ratlog data and format it for output.
+	 * @param data the log line to format
+	 */
 	static format(data: RatlogData): string {
 		let tagString =
 			data.tags?.length ?? 0 > 0
@@ -40,6 +52,13 @@ export default class Ratlog {
 		return escape("\n")(tagString + messageString + fieldString) + "\n";
 	}
 
+	/**
+	 * Take a string and parse it.
+	 *
+	 * Known to work on standards-compliant Ratlog formatter output. Not guaranteed to work with log data that doesn't meet the spec.
+	 *
+	 * @param logline a line of text to parse as Ratlog data
+	 */
 	static parse(logline: string): RatlogData {
 		let data: Partial<RatlogData> = {};
 
