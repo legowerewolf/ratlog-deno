@@ -1,6 +1,17 @@
 import Ratlog, { RatlogData, Stringable } from "./ratlog.ts";
 
+/**
+ * Interface representing a stream or function passed to the ratlogger constructor.
+ *
+ * It's either itself a function that takes data and returns nothing, or an object
+ * with a `write()` function that takes data and returns nothing.
+ */
 type Writer<T> = ((data: T) => void) | { write: (data: T) => void };
+
+/**
+ * Identify the single function to be called when outputting to a writer
+ * @param writer writer to identify output function for
+ */
 const getWriteFunc = <T>(writer: Writer<T>) =>
 	"write" in writer ? writer.write.bind(writer) : writer;
 
@@ -23,11 +34,13 @@ export type Ratlogger = ((
 	...tags: Stringable[]
 ) => void) & { tag: (...tags: Stringable[]) => Ratlogger };
 
+/**
+ * Constructor for more customizable logger instances.
+ * @param writer a writable stream or function that can take RatlogData
+ * @param tags a list of tags to apply to every output from this logger
+ */
 const generateRatlogger = (
-	/** a writable stream or function that can take RatlogData */
 	writer: Writer<RatlogData>,
-
-	/** pre-set tags */
 	...tags: Stringable[]
 ): Ratlogger => {
 	let originalTags = tags;
@@ -45,8 +58,10 @@ const generateRatlogger = (
 			});
 		},
 		{
-			tag: (/** pre-set tags */ ...tags: Stringable[]): Ratlogger =>
-				generateRatlogger(writer, ...originalTags.concat(tags)),
+			tag: (
+				/** a list of tags to apply to every output from this logger */
+				...tags: Stringable[]
+			): Ratlogger => generateRatlogger(writer, ...originalTags.concat(tags)),
 		}
 	);
 };
@@ -55,7 +70,7 @@ const ratlog = (() => {
 	return enrichFunction(
 		/**
 		 * @param writer a writable stream or function
-		 * @param tags pre-set tags
+		 * @param tags a list of tags to apply to every output from this logger
 		 * @returns a logging function bound to the writer
 		 */
 		(writer: Writer<string>, ...tags: Stringable[]) =>
