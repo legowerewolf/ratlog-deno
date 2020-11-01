@@ -19,8 +19,8 @@
   and share your thoughts.
 
 - Grab an
-  [unassigned issue](https://github.com/legowerewolf/ratlog-deno/issues?q=is%3Aopen+is%3Aissue+no%3Aassignee)
-  and start hacking.
+  [untouched issue](https://github.com/legowerewolf/ratlog-deno/issues?q=is%3Aissue+is%3Aopen+-linked%3Apr)
+  and start hacking. Start a draft PR and link it to claim the issue.
 
 - Check that dependencies (all found in
   [deps.ts](https://github.com/legowerewolf/ratlog-deno/blob/main/deps.ts)) are
