@@ -84,6 +84,9 @@ const ratlog = (() => {
 
 			/** Exposure of the core Ratlog string formatter. */
 			stringify: Ratlog.format,
+
+			/** Exposure of the core Ratlog parser. */
+			parse: Ratlog.parse,
 		}
 	);
 })();

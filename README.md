@@ -47,6 +47,13 @@ const critical = warn.tag("critical");
 
 critical("shutting down all servers");
 //> [warning|critical] shutting down all servers
+
+// Parse messages
+ratlog.parse("[negative] counting | count: -1");
+// returns { message: "counting", tags: ["negative"], fields: { count: -1 } }
+
+ratlog.parse("counting | count: 1");
+// returns { message: "counting", fields: { count: 1 } }
 ```
 
 The core of the implementation is exposed in `./ratlog.ts`, and is called the
