@@ -20,7 +20,7 @@ called the Classic API.
 
 ```ts
 // Import the Classic API from deno.land/x/
-import ratlog from "https://deno.land/x/ratlog@v1.0.0/classic-api.ts";
+import ratlog from "https://deno.land/x/ratlog@v1.1.0/classic-api.ts";
 
 // Set up logging through the console output
 const log = ratlog(console.log);
@@ -61,7 +61,7 @@ Core API. It's less fully featured, but provides a parsing implementation.
 
 ```ts
 // Import the Core API from deno.land/x/
-import Ratlog from "https://deno.land/x/ratlog@v1.0.0/ratlog.ts";
+import Ratlog from "https://deno.land/x/ratlog@v1.1.0/ratlog.ts";
 
 Ratlog.log({ message: "hello, world" });
 // returns "hello, world"
