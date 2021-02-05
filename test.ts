@@ -1,3 +1,4 @@
+import ratlog from "./classic-api.ts";
 import { assertEquals } from "./deps.ts";
 import Ratlog, { RatlogData } from "./ratlog.ts";
 
@@ -45,8 +46,6 @@ testCases.generic.map(({ log, data }) =>
 
 testCases.generic.map(({ log, data }) =>
   Deno.test(`classic-api format default ${JSON.stringify(data)}`, async () => {
-    const ratlog = await (await import("./classic-api.ts")).default;
-
     const write = (line: string) => assertEquals(line, log);
 
     let logger = ratlog(write);
@@ -59,8 +58,6 @@ testCases.generic.map(({ log, data }) =>
   Deno.test(
     `classic-api format default bound tag ${JSON.stringify(data)}`,
     async () => {
-      const ratlog = await (await import("./classic-api.ts")).default;
-
       const write = (line: string) => assertEquals(line, log);
 
       let logger = ratlog(write, ...(data.tags ?? []));
@@ -74,8 +71,6 @@ testCases.generic.map(({ log, data }) =>
   Deno.test(
     `classic-api format secondary bound tag ${JSON.stringify(data)}`,
     async () => {
-      const ratlog = await (await import("./classic-api.ts")).default;
-
       const write = (line: string) => assertEquals(line, log);
 
       let logger1 = ratlog(write);
