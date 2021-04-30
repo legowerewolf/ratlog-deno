@@ -31,7 +31,7 @@ export default class Ratlog {
 	 * @param data the log line to format
 	 */
   static format(data: RatlogData): string {
-    let tagString = data.tags?.length ?? 0 > 0
+    const tagString = data.tags?.length ?? 0 > 0
       ? `[${
         (data.tags ?? [])
           .map((tag) => escapeTag(tag.toString()))
@@ -39,9 +39,9 @@ export default class Ratlog {
       }] `
       : ``;
 
-    let messageString = escapeMessage(data.message.toString() ?? "");
+    const messageString = escapeMessage(data.message.toString() ?? "");
 
-    let fieldString = Object.entries(data.fields ?? {})
+    const fieldString = Object.entries(data.fields ?? {})
       .map((entry) =>
         entry.map((subentry) =>
           subentry != null ? escapeField(subentry.toString()) : subentry
@@ -61,20 +61,20 @@ export default class Ratlog {
 	 * @param logline a line of text to parse as Ratlog data
 	 */
   static parse(logline: string): RatlogData {
-    let data: Partial<RatlogData> = {};
+    const data: Partial<RatlogData> = {};
 
     logline = logline.replace(/\n$/, ""); // Trim off the newline at the end
 
     logline = unescape("\n")(logline);
 
-    let tagSection = logline.match(/^\[(.*(?<!\\))\] ?/);
+    const tagSection = logline.match(/^\[(.*(?<!\\))\] ?/);
     if (tagSection) {
       data.tags = tagSection[1].split(/(?<!\\)\|/g).map(unescapeTag);
       logline = logline.substring(tagSection[0].length);
     }
 
-    let messageSection = logline.match(/.*?(?= \|)/);
-    let messageString = messageSection ? messageSection[0] : logline;
+    const messageSection = logline.match(/.*?(?= \|)/);
+    const messageString = messageSection ? messageSection[0] : logline;
     logline = logline.substring(messageString.length);
     data.message = unescapeMessage(messageString);
 
@@ -83,7 +83,7 @@ export default class Ratlog {
         .split(/ (?<!\\)\| /g)
         .slice(1)
         .reduce((fields: RatlogData["fields"], elem) => {
-          let parts = elem.split(/(?<!\\): /);
+          const parts = elem.split(/(?<!\\): /);
 
           return {
             ...fields,
