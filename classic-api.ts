@@ -20,6 +20,7 @@ const getWriteFunc = <T>(writer: Writer<T>) =>
  * @param func the function to attach properties to
  * @param obj an object containing properties to copy to the function
  */
+// deno-lint-ignore ban-types (reason: F is supposed to be any function)
 const enrichFunction = <F extends Function, O>(func: F, obj: O): F & O =>
   Object.assign(func, obj);
 
@@ -45,7 +46,7 @@ const generateRatlogger = (
   writer: Writer<RatlogData>,
   ...tags: Stringable[]
 ): Ratlogger => {
-  let originalTags = tags;
+  const originalTags = tags;
 
   return enrichFunction(
     (
