@@ -8,13 +8,16 @@ interface TestCase {
 }
 
 interface TestcaseFile {
-  meta: {};
+  meta: {
+    version: string;
+    source: string;
+  };
   generic: TestCase[];
   parsing: TestCase[];
 }
 
 console.log("Attempting to pull up-to-date test cases from spec...");
-let testCases: TestcaseFile = await fetch(
+const testCases: TestcaseFile = await fetch(
   "https://raw.githubusercontent.com/ratlog/ratlog-spec/master/ratlog.testsuite.json",
 )
   .then(
@@ -45,10 +48,10 @@ testCases.generic.map(({ log, data }) =>
 );
 
 testCases.generic.map(({ log, data }) =>
-  Deno.test(`classic-api format default ${JSON.stringify(data)}`, async () => {
+  Deno.test(`classic-api format default ${JSON.stringify(data)}`, () => {
     const write = (line: string) => assertEquals(line, log);
 
-    let logger = ratlog(write);
+    const logger = ratlog(write);
 
     logger(data.message, data.fields, ...(data.tags ?? []));
   })
@@ -57,10 +60,10 @@ testCases.generic.map(({ log, data }) =>
 testCases.generic.map(({ log, data }) =>
   Deno.test(
     `classic-api format default bound tag ${JSON.stringify(data)}`,
-    async () => {
+    () => {
       const write = (line: string) => assertEquals(line, log);
 
-      let logger = ratlog(write, ...(data.tags ?? []));
+      const logger = ratlog(write, ...(data.tags ?? []));
 
       logger(data.message, data.fields);
     },
@@ -70,12 +73,12 @@ testCases.generic.map(({ log, data }) =>
 testCases.generic.map(({ log, data }) =>
   Deno.test(
     `classic-api format secondary bound tag ${JSON.stringify(data)}`,
-    async () => {
+    () => {
       const write = (line: string) => assertEquals(line, log);
 
-      let logger1 = ratlog(write);
+      const logger1 = ratlog(write);
 
-      let logger2 = logger1.tag(...(data.tags ?? []));
+      const logger2 = logger1.tag(...(data.tags ?? []));
 
       logger2(data.message, data.fields);
     },
