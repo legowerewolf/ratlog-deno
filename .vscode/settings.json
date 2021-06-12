@@ -4,5 +4,8 @@
 	"deno.unstable": false,
 	"[typescript]": {
 		"editor.defaultFormatter": "denoland.vscode-deno"
-	}
+	},
+	"conventionalCommits.scopes": [
+		"deps"
+	]
 }
