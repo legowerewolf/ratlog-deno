@@ -3,10 +3,13 @@
 	"version": "1.1.3",
 	"description": "Application Logging for Rats, Humans, and Machines",
 	"main": "index.js",
-	"repository": "https://github.com/legowerewolf/ratlog-deno",
+	"repository": "git://github.com/legowerewolf/ratlog-deno.git",
 	"author": "Duncan Gibson <legowerewolf@gmail.com>",
 	"license": "MPL-2.0",
 	"scripts": {
 		"prepublish": "make all"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
 	}
 }
