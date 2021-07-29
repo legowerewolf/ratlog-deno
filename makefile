@@ -1,4 +1,4 @@
-all : dist/classic-api.ts dist/ratlog.ts
+all : dist/classic-api.js dist/ratlog.js
 
 # Download the latest version of Deno
 deno :
@@ -8,6 +8,6 @@ deno :
 	rm wget_log deno-x86_64-unknown-linux-gnu.zip
 
 # Bundle typescript files into safe outputs using Deno, which'll be fetched if needed
-dist/%.ts : %.ts | deno
+dist/%.js : %.ts | deno
 	mkdir -p dist
 	deno bundle $< $@
