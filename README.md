@@ -82,6 +82,19 @@ Ratlog.parse("hello, world");
 // returns { message: "hello, world" }
 ```
 
+As a function of how the tag generator is implemented, tags can be dynamically
+generated.
+
+```ts
+import Ratlog from "https://deno.land/x/ratlog/ratlog.ts";
+
+Ratlog.log({
+	message: "hello, world",
+	tags: [{ toString: () => new Date().toISOString() }],
+});
+// returns `[timestamp] hello world`
+```
+
 ## How to help
 
 - Check out
