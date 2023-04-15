@@ -4,8 +4,8 @@
 [![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/legowerewolf/ratlog-deno/latest?sort=semver)](https://github.com/legowerewolf/ratlog-deno/releases/latest)
 [![License](https://img.shields.io/github/license/legowerewolf/ratlog-deno)](https://github.com/legowerewolf/ratlog-deno/blob/main/LICENSE)
 
-[![unit test status (Github Actions)](https://img.shields.io/github/workflow/status/legowerewolf/ratlog-deno/Deno?label=unit%20tests)](https://github.com/legowerewolf/ratlog-deno/actions?query=workflow%3ADeno)
-[![code analysis status](https://img.shields.io/github/workflow/status/legowerewolf/ratlog-deno/CodeQL?label=CodeQL%20vulnerability%20analysis)](https://github.com/legowerewolf/ratlog-deno/actions?query=workflow%3ACodeQL)
+[![Deno unit tests](https://img.shields.io/github/actions/workflow/status/legowerewolf/ratlog-deno/tests.yml?label=unit%20tests&logo=deno)](https://github.com/legowerewolf/ratlog-deno/actions?query=workflow%3ADeno)
+[![CodeQL code analysis status](https://img.shields.io/github/actions/workflow/status/legowerewolf/ratlog-deno/codeql-analysis.yml?label=codeql%20analysis)](https://github.com/legowerewolf/ratlog-deno/actions?query=workflow%3ACodeQL)
 
 [![On deno.land/x/ as ratlog](https://img.shields.io/badge/deno%20%2Fx%2F-ratlog-informational)](https://deno.land/x/ratlog)
 
