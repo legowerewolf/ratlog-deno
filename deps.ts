@@ -1,1 +1,1 @@
-export * from "https://deno.land/std@0.217.0/testing/asserts.ts";
+export { assertEquals } from "https://deno.land/std@0.224.0/assert/assert_equals.ts";
